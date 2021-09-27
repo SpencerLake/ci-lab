@@ -1,14 +1,16 @@
-orbs: test
-  node: circleci/node@2.0.2
-
 version: 2.1
 
-workflows:
-  matrix-tests:
-    jobs:
-      - node/tests:
-        version: 13.11.0
-      - node/tests:
-        version: 12.16.0
-      -node/ tests:
-        version: 10.19.0
+orbs:
+  node: circleci/node@1.1
+
+jobs:
+  build:
+    executor:
+      name: node/default
+      tag: '10.4'
+    steps:
+      -checkout
+      -node/with-cache:
+        steps:
+          -run: npm install jest
+        -run: npm run test
